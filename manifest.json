@@ -1,7 +1,7 @@
 {
 	"id": "open-plugin-settings",
 	"name": "Open Plugin Settings",
-	"version": "0.0.0",
+	"version": "0.0.1",
 	"minAppVersion": "0.15.0",
 	"description": "Open the plugin settings tab with a command",
 	"author": "Mara-Li",
