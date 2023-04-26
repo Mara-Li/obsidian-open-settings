@@ -3,6 +3,8 @@
         "title": "Open Plugin Commander : Paramètres",
         "desc": "Seuls les plugins activés et ayant des paramètres seront affichés dans la liste.",
         "addNew": "Ajouter un nouveau plugin",
-        "remove": "Supprimer la commande de ce plugin"
+        "remove": "Supprimer la commande de ce plugin",
+		"refresh" : "Rafraîchir la liste, supprimant les plugins désactivés/supprimés.",
+		"disabled" : "Ce plugin est désactivé depuis les paramètres des modules complémentaires."
     }
 }

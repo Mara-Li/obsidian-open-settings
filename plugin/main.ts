@@ -1,6 +1,6 @@
-import { Plugin} from 'obsidian';
-import { DEFAULT_SETTINGS, OpenPluginSettings, PluginInfo } from './interface';
-import { ressources, translationLanguage } from "./i18n/i18next";
+import {Plugin} from 'obsidian';
+import {DEFAULT_SETTINGS, OpenPluginSettings, PluginInfo} from './interface';
+import {ressources, translationLanguage} from "./i18n/i18next";
 import OpenPluginSettingTab from './settings';
 import i18next from 'i18next';
 
@@ -64,14 +64,44 @@ export default class OpenPluginCmdr extends Plugin {
 		}
 	}
 
-	openSettings(plugin: PluginInfo) {
+	/**
+	 * Remove the plugins that are not enabled anymore
+	 * @param settings {OpenPluginSettings} - the complete settings object
+	 *
+	 */
+	async removeDeletedPlugins() {
+		const pluginsInfos = this.settings.pluginCmdr;
 		//@ts-ignore
-		this.app.setting.openTabByID(plugin.id);
-	}	
+		const allPlugins = this.app.plugins.manifests;
+		console.log(allPlugins);
+		// if the plugin is deleted remove it from the settings
+		// plugin deleted doesn't appear in the app.plugins.plugins
+		pluginsInfos.forEach((pluginInfo) => {
+			if (allPlugins[pluginInfo.id] === undefined) {
+				this.settings.pluginCmdr = this.settings.pluginCmdr.filter((p) => p.id !== pluginInfo.id);
+			}
+		});
+		const cmdrSettings: PluginInfo = {
+			id: "open-plugin-settings",
+			name: "Open Plugin Settings",
+		};
+		if (this.settings.pluginCmdr.find((p) => p.id === cmdrSettings.id) === undefined) {
+			this.settings.pluginCmdr.push(cmdrSettings);
+		}
+		await this.saveSettings();
+	}
+
+	/** refresh the commands list with removing disabled / deleted plugins and adding new ones */
+
+	async refresh() {
+		for (const plugin of this.settings.pluginCmdr) {
+			await this.addNewCommands(undefined, plugin);
+		}
+	}
 
 	async onload() {
 		console.log(`Loading ${this.manifest.id} v${this.manifest.version}...`);
-		i18next.init({
+		await i18next.init({
 			lng: translationLanguage,
 			fallbackLng: "en",
 			resources: ressources,
@@ -79,10 +109,8 @@ export default class OpenPluginCmdr extends Plugin {
 		});
 		await this.loadSettings();
 		this.addSettingTab(new OpenPluginSettingTab(this.app, this));
-		for (const plugin of this.settings.pluginCmdr) {
-			this.addNewCommands(undefined, plugin);
-		}
-		
+		await this.removeDeletedPlugins();
+		await this.refresh();
 	}
 
 	onunload() {

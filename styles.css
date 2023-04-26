@@ -15,3 +15,8 @@ button.add-plugin-button {
     border-top: none;
     border-bottom: 1px solid var(--background-modifier-border);
 }
+
+.setting-item.open-plugin-settings-item.disabled {
+	opacity: 0.5;
+	font-style: italic;
+}
