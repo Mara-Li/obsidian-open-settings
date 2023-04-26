@@ -9,6 +9,8 @@ By default, the settings of the plugin itself can be opened by the command palet
 To add the command to open the settings of another plugin, just click on the adding button, and search the plugin you want to add.
 After, you can use the command `Open Plugin Settings: Open <plugin name>` to open the settings of the plugin.
 
+From the settings, you can also refresh the list to remove the deleted plugins and disable the commands of the disabled plugins.
+
 ## 📥 Installation
 
 - [ ] From Obsidian's community plugins
@@ -19,12 +21,22 @@ After, you can use the command `Open Plugin Settings: Open <plugin name>` to ope
   - In Obsidian settings, reload the plugin
   - Enable the plugin
 
-## 🤖 Developping 
+## 🤖 Developing 
 I use `npm` to develop this plugin : 
 ```
 npm install
 npm run dev
 ```
+
+You can also create a `.env.json` file with the path to your main Obsidian Vault, as follows : 
+```json
+{
+  "VAULT": "path/to/your/vault"
+}
+```
+
+> **Info** 
+> You need to duplicate the `\` if you are on Windows.
 
 ### 🎼 Languages
 
