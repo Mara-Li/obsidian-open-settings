@@ -11,6 +11,9 @@ After, you can use the command `Open Plugin Settings: Open <plugin name>` to ope
 
 From the settings, you can also refresh the list to remove the deleted plugins and disable the commands of the disabled plugins.
 
+![gif demo](https://user-images.githubusercontent.com/30244939/234854311-7da05061-2646-43c0-bd42-38fa50121d13.gif)
+
+
 ## 📥 Installation
 
 - [ ] From Obsidian's community plugins
