@@ -38,7 +38,7 @@ You can also create a `.env.json` file with the path to your main Obsidian Vault
 }
 ```
 
-> **Note** 
+> **Note**   
 > You need to duplicate the `\` if you are on Windows.
 
 ### 🎼 Languages
