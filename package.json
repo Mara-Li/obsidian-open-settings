@@ -1,6 +1,6 @@
 {
 	"name": "open-plugin-settings",
-	"version": "0.0.2",
+	"version": "0.0.3",
 	"description": "Open the plugin settings tab with a command",
 	"main": "main.js",
 	"scripts": {

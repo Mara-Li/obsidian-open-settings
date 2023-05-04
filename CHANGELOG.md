@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.0.3](https://github.com/Lisandra-dev/open-plugin-settings-commands/compare/0.0.2...0.0.3) (2023-05-04)
+
+
+### Bug Fixes
+
+* change to app.setting.pluginTabs ([dfd0d47](https://github.com/Lisandra-dev/open-plugin-settings-commands/commit/dfd0d47d3d39b58fd6c84f36c6e4a8d11c9a3feb))
+
 ## [0.0.2](https://github.com/Lisandra-dev/open-plugin-settings-commands/compare/0.0.1...0.0.2) (2023-04-26)
 
 
