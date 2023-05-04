@@ -24,4 +24,15 @@ declare module "obsidian" {
 			tabHeadersEl: HTMLDivElement;
 		};
 	}
+	//need to update the PluginSettingTab to prevent errors
+	interface PluginSettingTab {
+		app: App;
+		containerEl: HTMLElement;
+		name: string;
+		id: string;
+		navEl: HTMLElement;
+		plugin: Plugin;
+		setting: PluginSettingTab;
+	}
+
 }

@@ -1,4 +1,4 @@
-import {Plugin} from 'obsidian';
+import {Plugin, PluginSettingTab} from 'obsidian';
 import {DEFAULT_SETTINGS, OpenPluginSettings, PluginInfo} from './interface';
 import {ressources, translationLanguage} from "./i18n/i18next";
 import OpenPluginSettingTab from './settings';
@@ -20,8 +20,8 @@ export default class OpenPluginCmdr extends Plugin {
 
 	checkIfPluginHasSettings(pluginId: string): boolean {
 		//@ts-ignore
-		const plugin = app.plugins.plugins[pluginId];
-		return plugin?.settings !== undefined;
+		const allSettingsTab = app.setting.pluginTabs;
+		return allSettingsTab.find((tab) => tab.id === pluginId) !== undefined;
 	}
 
 	async removeCommands()
