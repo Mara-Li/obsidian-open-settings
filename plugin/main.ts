@@ -1,4 +1,4 @@
-import {Plugin, PluginSettingTab} from 'obsidian';
+import {Plugin} from 'obsidian';
 import {DEFAULT_SETTINGS, OpenPluginSettings, PluginInfo} from './interface';
 import {ressources, translationLanguage} from "./i18n/i18next";
 import OpenPluginSettingTab from './settings';
