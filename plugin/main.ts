@@ -1,6 +1,6 @@
 import {Plugin} from 'obsidian';
 import {DEFAULT_SETTINGS, OpenPluginSettings, PluginInfo} from './interface';
-import {ressources, translationLanguage} from "./i18n/i18next";
+import {ressources as resources, translationLanguage} from "./i18n/i18next";
 import OpenPluginSettingTab from './settings';
 import i18next from 'i18next';
 
@@ -20,7 +20,7 @@ export default class OpenPluginCmdr extends Plugin {
 
 	checkIfPluginHasSettings(pluginId: string): boolean {
 		//@ts-ignore
-		const allSettingsTab = app.setting.pluginTabs;
+		const allSettingsTab = this.app.setting.pluginTabs;
 		return allSettingsTab.find((tab) => tab.id === pluginId) !== undefined;
 	}
 
@@ -33,7 +33,7 @@ export default class OpenPluginCmdr extends Plugin {
 			if (this.settings.pluginCmdr.find((p) => p.id === id) === undefined) {
 				console.log("remove command: " + command);
 				//@ts-ignore
-				app.commands.removeCommand(command);
+				this.app.commands.removeCommand(command);
 			}
 		})
 	}
@@ -50,15 +50,15 @@ export default class OpenPluginCmdr extends Plugin {
 	{
 		if (oldPlugin !== undefined) {
 			//@ts-ignore
-			app.commands.removeCommand(`open-plugin-settings:${oldPlugin.id}`); //doesn't work in some condition
+			this.app.commands.removeCommand(`open-plugin-settings:${oldPlugin.id}`); //doesn't work in some condition
 		}
 		if (newPlugin !== undefined && this.checkIfPluginIsEnabled(newPlugin.id) && this.checkIfPluginHasSettings(newPlugin.id)) {
 			this.addCommand({
 				id: `${newPlugin.id}`,
 				name: `${newPlugin.name}`,
 				callback: async () => {
-					app.setting.open();
-					app.setting.openTabById(newPlugin.id);
+					this.app.setting.open();
+					this.app.setting.openTabById(newPlugin.id);
 				}
 			});
 		}
@@ -73,7 +73,6 @@ export default class OpenPluginCmdr extends Plugin {
 		const pluginsInfos = this.settings.pluginCmdr;
 		//@ts-ignore
 		const allPlugins = this.app.plugins.manifests;
-		console.log(allPlugins);
 		// if the plugin is deleted remove it from the settings
 		// plugin deleted doesn't appear in the app.plugins.plugins
 		pluginsInfos.forEach((pluginInfo) => {
@@ -104,7 +103,7 @@ export default class OpenPluginCmdr extends Plugin {
 		await i18next.init({
 			lng: translationLanguage,
 			fallbackLng: "en",
-			resources: ressources,
+			resources: resources,
 			returnNull: false,
 		});
 		await this.loadSettings();
