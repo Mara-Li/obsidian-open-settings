@@ -13,6 +13,7 @@ From the settings, you can also refresh the list to remove the deleted plugins a
 
 ![gif demo](https://user-images.githubusercontent.com/30244939/234854311-7da05061-2646-43c0-bd42-38fa50121d13.gif)
 
+You can also open any plugin (not registered) with the command `Open other plugin settings` and search the plugin you want to open.
 
 ## 📥 Installation
 
@@ -49,7 +50,7 @@ You can also create a `.env.json` file with the path to your main Obsidian Vault
 To add a translation:
 - Fork the repository
 - Add the translation in the `plugin/i18n/locales` folder with the name of the language (ex: `fr.json`)
-- Copy the content of the [`en.json`](./plugin/i18n/locales/en.json) file in the new file
+- Copy the content of the [`en.json`](./src/i18n/locales/en.json) file in the new file
 - Translate the content
 - Create a pull request
 
