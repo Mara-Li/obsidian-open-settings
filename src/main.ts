@@ -3,6 +3,7 @@ import {DEFAULT_SETTINGS, OpenPluginSettings, PluginInfo} from "./interface";
 import {ressources as resources, translationLanguage} from "./i18n/i18next";
 import OpenPluginSettingTab from "./settings";
 import i18next from "i18next";
+import {OpenOtherPluginSettings} from "./modals";
 
 export default class OpenPluginCmdr extends Plugin {
 	settings: OpenPluginSettings;
@@ -18,6 +19,21 @@ export default class OpenPluginCmdr extends Plugin {
 		return allEnabledPlugins.has(pluginId);
 	}
 
+	parseManifestAllPlugins(): PluginInfo[] {
+		const plugins: PluginInfo[] = [];
+		//@ts-ignore
+		const manifestOfAllPlugins = this.app.plugins.manifests;
+		for (const manifest in manifestOfAllPlugins) {
+			if (!this.settings.pluginCmdr.find((p) => p.id === manifestOfAllPlugins[manifest].id) && this.checkIfPluginHasSettings(manifestOfAllPlugins[manifest].id)) {
+				plugins.push({
+					id: manifestOfAllPlugins[manifest].id,
+					name: manifestOfAllPlugins[manifest].name
+				});
+			}
+		}
+		return plugins;
+	}
+	
 	checkIfPluginHasSettings(pluginId: string): boolean {
 		//@ts-ignore
 		const allSettingsTab = this.app.setting.pluginTabs;
@@ -41,7 +57,7 @@ export default class OpenPluginCmdr extends Plugin {
 	/**
 	 * Adds or removes commands if the settings changed
 	 * @param oldPlugin {string | undefined} - the old folder path to remove the command
-	 * @param newPlugin {FolderSettings | undefined} - the new folder to add the command
+	 * @param newPlugin {PluginInfo | undefined} - the new folder to add the command
 	 */
 	async addNewCommands(
 		oldPlugin: PluginInfo | undefined,
@@ -65,9 +81,7 @@ export default class OpenPluginCmdr extends Plugin {
 	}
 
 	/**
-	 * Remove the plugins that are not enabled anymore
-	 * @param settings {OpenPluginSettings} - the complete settings object
-	 *
+	 * Remove the plugins that are not enabled anymore*
 	 */
 	async removeDeletedPlugins() {
 		const pluginsInfos = this.settings.pluginCmdr;
@@ -82,7 +96,7 @@ export default class OpenPluginCmdr extends Plugin {
 		});
 		const cmdrSettings: PluginInfo = {
 			id: "open-plugin-settings",
-			name: "Open Plugin Settings",
+			name: this.manifest.name,
 		};
 		if (this.settings.pluginCmdr.find((p) => p.id === cmdrSettings.id) === undefined) {
 			this.settings.pluginCmdr.push(cmdrSettings);
@@ -108,6 +122,14 @@ export default class OpenPluginCmdr extends Plugin {
 		});
 		await this.loadSettings();
 		this.addSettingTab(new OpenPluginSettingTab(this.app, this));
+		
+		this.addCommand({
+			id: "open-other-plugin-settings",
+			name: i18next.t("openOther"),
+			callback: () => {
+				new OpenOtherPluginSettings(this.app, this, this.settings).open();
+			}
+		});
 		await this.removeDeletedPlugins();
 		await this.refresh();
 	}

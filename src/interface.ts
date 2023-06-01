@@ -10,7 +10,7 @@ export const DEFAULT_SETTINGS: OpenPluginSettings = {
 };
 
 export interface PluginInfo {
-    id: string;
+	id: string;
     name: string;
 }
 

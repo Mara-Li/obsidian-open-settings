@@ -1,10 +1,11 @@
 {
-    "settingsTab": {
-        "addNew": "Ajouter un nouveau plugin",
-        "desc": "Seuls les plugins activés et ayant des paramètres seront affichés dans la liste.",
-		"disabled" : "Ce plugin est désactivé depuis les paramètres des modules complémentaires.",
-		"refresh" : "Rafraîchir la liste, supprimant les plugins désactivés/supprimés.",
-        "remove": "Supprimer la commande de ce plugin",
-        "title": "Open Plugin Commander : Paramètres"
-    }
+  "openOther": "Ouvrir les paramètres d'autres plugins",
+  "settingsTab": {
+    "addNew": "Ajouter un nouveau plugin",
+    "desc": "Seuls les plugins activés et ayant des paramètres seront affichés dans la liste.",
+    "disabled": "Ce plugin est désactivé depuis les paramètres des modules complémentaires.",
+    "refresh": "Rafraîchir la liste, supprimant les plugins désactivés/supprimés.",
+    "remove": "Supprimer la commande de ce plugin",
+    "title": "Open Plugin Settings"
+  }
 }

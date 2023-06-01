@@ -5,7 +5,7 @@
  */
 
 import {App, FuzzySuggestModal} from "obsidian";
-import { PluginInfo } from "./interface";
+import {OpenPluginSettings, PluginInfo} from "./interface";
 import OpenPluginCmdr from "./main";
 
 
@@ -13,23 +13,7 @@ export class SearchInAllPlugins extends FuzzySuggestModal<PluginInfo> {
 	result: PluginInfo;
 	plugin: OpenPluginCmdr;
 	onSubmit: (result: PluginInfo) => void;
-
-
-	parseManifestAllPlugins(): PluginInfo[] {
-		const plugins: PluginInfo[] = [];
-		//@ts-ignore
-		const manifestOfAllPlugins = this.app.plugins.manifests;
-		for (const manifest in manifestOfAllPlugins) {
-			if (!this.plugin.settings.pluginCmdr.find((p) => p.id === manifestOfAllPlugins[manifest].id) && this.plugin.checkIfPluginHasSettings(manifestOfAllPlugins[manifest].id)) {
-				plugins.push({
-					id: manifestOfAllPlugins[manifest].id,
-					name: manifestOfAllPlugins[manifest].name
-				});
-			}
-		}
-		return plugins;
-	}
-
+	
 	constructor(app: App, plugin: OpenPluginCmdr, onSubmit: (result: PluginInfo) => void) {
 		super(app);
 		this.onSubmit = onSubmit;
@@ -37,7 +21,7 @@ export class SearchInAllPlugins extends FuzzySuggestModal<PluginInfo> {
 	}
 
 	getItems(): PluginInfo[] {
-		return this.parseManifestAllPlugins();
+		return this.plugin.parseManifestAllPlugins();
 	}
 
 	getItemText(item: PluginInfo): string {
@@ -53,5 +37,30 @@ export class SearchInAllPlugins extends FuzzySuggestModal<PluginInfo> {
 	onClose(): void {
 		const {contentEl} = this;
 		contentEl.empty();
+	}
+}
+
+export class OpenOtherPluginSettings extends FuzzySuggestModal<PluginInfo> {
+	plugin: OpenPluginCmdr;
+	settings: OpenPluginSettings;
+	
+	constructor(app: App, plugin: OpenPluginCmdr, settings: OpenPluginSettings) {
+		super(app);
+		this.plugin = plugin;
+		this.settings = settings;
+	}
+	
+	getItems(): PluginInfo[] {
+		return this.plugin.parseManifestAllPlugins();
+	}
+	
+	getItemText(item: PluginInfo): string {
+		return item.name;
+	}
+	
+	onChooseItem(item: PluginInfo, evt: MouseEvent | KeyboardEvent): void {
+		//open the settings of the plugin
+		this.app.setting.open();
+		this.app.setting.openTabById(item.id);
 	}
 }
