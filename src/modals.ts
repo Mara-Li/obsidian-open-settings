@@ -28,6 +28,7 @@ export class SearchInAllPlugins extends FuzzySuggestModal<PluginInfo> {
 		return item.name;
 	}
 
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	onChooseItem(item: PluginInfo, evt: MouseEvent | KeyboardEvent): void {
 		this.result = item;
 		this.onSubmit(this.result);
@@ -58,6 +59,7 @@ export class OpenOtherPluginSettings extends FuzzySuggestModal<PluginInfo> {
 		return item.name;
 	}
 	
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	onChooseItem(item: PluginInfo, evt: MouseEvent | KeyboardEvent): void {
 		//open the settings of the plugin
 		this.app.setting.open();
