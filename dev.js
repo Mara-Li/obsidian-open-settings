@@ -34,13 +34,13 @@ if (vaultDev.trim().length > 0) {
 		"open-plugin-settings",
 		".hotreload"
 	);
-	if (!fs.existsSync(filePath)) {
+	if (!fs.existsSync(pluginDir)) {
 		console.log(
 			`${c.danger.bold("❌")} ${c.danger(
 				".hotreload file not found. Creating it..."
 			)}`
 		);
-		fs.writeFile(filePath, "", (err) => {
+		fs.writeFile(pluginDir, "", (err) => {
 			if (err) {
 				console.error(err);
 			}
