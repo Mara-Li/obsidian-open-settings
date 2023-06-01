@@ -1,8 +1,8 @@
-import {Plugin} from 'obsidian';
-import {DEFAULT_SETTINGS, OpenPluginSettings, PluginInfo} from './interface';
+import {Plugin} from "obsidian";
+import {DEFAULT_SETTINGS, OpenPluginSettings, PluginInfo} from "./interface";
 import {ressources as resources, translationLanguage} from "./i18n/i18next";
-import OpenPluginSettingTab from './settings';
-import i18next from 'i18next';
+import OpenPluginSettingTab from "./settings";
+import i18next from "i18next";
 
 export default class OpenPluginCmdr extends Plugin {
 	settings: OpenPluginSettings;
@@ -35,10 +35,10 @@ export default class OpenPluginCmdr extends Plugin {
 				//@ts-ignore
 				this.app.commands.removeCommand(command);
 			}
-		})
+		});
 	}
 
-		/**
+	/**
 	 * Adds or removes commands if the settings changed
 	 * @param oldPlugin {string | undefined} - the old folder path to remove the command
 	 * @param newPlugin {FolderSettings | undefined} - the new folder to add the command

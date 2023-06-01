@@ -3,10 +3,10 @@ export interface OpenPluginSettings {
 }
 
 export const DEFAULT_SETTINGS: OpenPluginSettings = {
-    pluginCmdr: [{
-        id: "open-plugin-settings",
-        name: "Open Plugin Settings",
-    }]
+	pluginCmdr: [{
+		id: "open-plugin-settings",
+		name: "Open Plugin Settings",
+	}]
 };
 
 export interface PluginInfo {

@@ -1,10 +1,10 @@
 {
 	"settingsTab": {
-		"title": "Open Plugin Commander : Settings",
-		"desc": "Only the enabled plugins and plugins with settings will be displayed in the list.",
 		"addNew" : "Add a new plugin",
-		"remove": "Remove this plugin",
+		"desc": "Only the enabled plugins and plugins with settings will be displayed in the list.",
+		"disabled": "This plugin is disabled from Obsidian Community settings.",
 		"refresh": "Refresh the list, removing disabled/removed plugins.",
-		"disabled": "This plugin is disabled from Obsidian Community settings."
+		"remove": "Remove this plugin",
+		"title": "Open Plugin Commander : Settings"
 	}
 }

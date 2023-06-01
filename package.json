@@ -7,7 +7,7 @@
 	"scripts": {
 		"build": "obsidian-plugin build src/main.ts --with-stylesheet src/styles.css",
 		"dev": "node dev.js",
-		"lint:fix": "eslint --ext .ts,.js,.json src --fix",
+		"lint:fix": "eslint --ext .ts,.js,.json src/ --fix",
 		"lint": "eslint --ext .ts src",
 		"bump": "node commit-and-tag-version.js",
 		"preexport": "pnpm run build",

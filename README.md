@@ -7,7 +7,7 @@ This plugin allows you to create a command to open the settings tabs of a specif
 By default, the settings of the plugin itself can be opened by the command palette, with using `Open Plugin Settings: Open Plugin Settings` command.
 
 To add the command to open the settings of another plugin, just click on the adding button, and search the plugin you want to add.
-After, you can use the command `Open Plugin Settings: Open <plugin name>` to open the settings of the plugin.
+After you can use the command `Open Plugin Settings: Open <plugin name>` to open the settings of the plugin.
 
 From the settings, you can also refresh the list to remove the deleted plugins and disable the commands of the disabled plugins.
 
