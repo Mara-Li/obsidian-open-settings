@@ -1,6 +1,6 @@
 ## Open Plugin Settings 
 
-This plugin allow you to create a command to open the settings tabs of a specified plugin.
+This plugin allows you to create a command to open the settings tabs of a specified plugin.
 
 ## Usage
 
@@ -16,7 +16,7 @@ From the settings, you can also refresh the list to remove the deleted plugins a
 
 ## 📥 Installation
 
-- [ ] From Obsidian's community plugins
+- [x] From Obsidian's community plugins
 - [x] Using BRAT with `https://github.com/Lisandra-dev/open-plugin-settings-commands`
 - [x] From the release page: 
   - Download the latest release
