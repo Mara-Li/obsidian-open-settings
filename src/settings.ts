@@ -17,8 +17,8 @@ export default class OpenPluginSettingTab extends PluginSettingTab {
 		const { containerEl } = this;
 		containerEl.empty();
 
-		containerEl.createEl("h2", { text: i18next.t("settingsTab.title")});
-		containerEl.createEl("p", { text: i18next.t("settingsTab.desc")});
+		containerEl.createEl("h2", { text: i18next.t("settingsTab.title")}).style.textAlign = "center";
+		containerEl.createEl("p", { text: i18next.t("settingsTab.desc")}).style.textAlign = "center";
 
 		const buttonSettings = new Setting(containerEl)
 			.setClass("open-plugin-settings-header");
