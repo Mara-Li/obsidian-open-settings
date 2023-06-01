@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [1.1.0](https://github.com/Lisandra-dev/open-plugin-settings-commands/compare/0.0.4...1.1.0) (2023-06-01)
+
+
+### Features
+
+* add a modal to open all other plugins (not configured) ([89f4eb9](https://github.com/Lisandra-dev/open-plugin-settings-commands/commit/89f4eb917c28d59245b330e4967a46fa89a040c1)), closes [#1](https://github.com/Lisandra-dev/open-plugin-settings-commands/issues/1)
+
 ## [0.0.4](https://github.com/Lisandra-dev/open-plugin-settings-commands/compare/0.0.3...0.0.4) (2023-05-05)
 
 ## [0.0.3](https://github.com/Lisandra-dev/open-plugin-settings-commands/compare/0.0.2...0.0.3) (2023-05-04)
