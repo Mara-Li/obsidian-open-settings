@@ -15,8 +15,7 @@ export default class OpenPluginCmdr extends Plugin {
 
 	checkIfPluginIsEnabled(pluginId: string): boolean {
 		//@ts-ignore
-		const allEnabledPlugins = this.app.plugins.enabledPlugins as Set<string>;
-		return allEnabledPlugins.has(pluginId);
+		return this.app.plugins.isEnabled(pluginId);
 	}
 
 	parseManifestAllPlugins(): PluginInfo[] {
@@ -33,7 +32,7 @@ export default class OpenPluginCmdr extends Plugin {
 		}
 		return plugins;
 	}
-	
+
 	checkIfPluginHasSettings(pluginId: string): boolean {
 		//@ts-ignore
 		const allSettingsTab = this.app.setting.pluginTabs;
@@ -117,12 +116,12 @@ export default class OpenPluginCmdr extends Plugin {
 		await i18next.init({
 			lng: translationLanguage,
 			fallbackLng: "en",
-			resources: resources,
+			resources,
 			returnNull: false,
 		});
 		await this.loadSettings();
 		this.addSettingTab(new OpenPluginSettingTab(this.app, this));
-		
+
 		this.addCommand({
 			id: "open-other-plugin-settings",
 			name: i18next.t("openOther"),
