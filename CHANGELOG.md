@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [1.1.2](https://github.com/Lisandra-dev/open-plugin-settings-commands/compare/1.1.1...1.1.2) (2023-12-04)
+
+
+### Bug Fixes
+
+* enabled plugins not found in the obsidian list ; ([1f4b71f](https://github.com/Lisandra-dev/open-plugin-settings-commands/commit/1f4b71f9b49d93a29fb5d3aee593295520c13f5a))
+
 ## [1.1.1](https://github.com/Lisandra-dev/open-plugin-settings-commands/compare/1.1.0...1.1.1) (2023-06-01)
 
 ## [1.1.0](https://github.com/Lisandra-dev/open-plugin-settings-commands/compare/0.0.4...1.1.0) (2023-06-01)
