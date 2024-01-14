@@ -15,7 +15,7 @@ export default class OpenPluginCmdr extends Plugin {
 
 	checkIfPluginIsEnabled(pluginId: string): boolean {
 		//@ts-ignore
-		return this.app.plugins.isEnabled(pluginId);
+		return Object.keys(this.app.plugins.plugins).find((plugin) => plugin === pluginId) !== undefined;
 	}
 
 	parseManifestAllPlugins(): PluginInfo[] {
@@ -26,7 +26,8 @@ export default class OpenPluginCmdr extends Plugin {
 			if (!this.settings.pluginCmdr.find((p) => p.id === manifestOfAllPlugins[manifest].id) && this.checkIfPluginHasSettings(manifestOfAllPlugins[manifest].id)) {
 				plugins.push({
 					id: manifestOfAllPlugins[manifest].id,
-					name: manifestOfAllPlugins[manifest].name
+					name: manifestOfAllPlugins[manifest].name,
+					commandName: manifestOfAllPlugins[manifest].name,
 				});
 			}
 		}
@@ -46,7 +47,7 @@ export default class OpenPluginCmdr extends Plugin {
 		pluginCommands.forEach((command) => {
 			const id = command.replace("open-plugin-settings:", "");
 			if (this.settings.pluginCmdr.find((p) => p.id === id) === undefined) {
-				console.log("remove command: " + command);
+				console.log(`remove command: ${command}`);
 				//@ts-ignore
 				this.app.commands.removeCommand(command);
 			}
@@ -70,7 +71,7 @@ export default class OpenPluginCmdr extends Plugin {
 		if (newPlugin !== undefined && this.checkIfPluginIsEnabled(newPlugin.id) && this.checkIfPluginHasSettings(newPlugin.id)) {
 			this.addCommand({
 				id: `${newPlugin.id}`,
-				name: `${newPlugin.name}`,
+				name: `${newPlugin.commandName ?? newPlugin.name}`,
 				callback: async () => {
 					this.app.setting.open();
 					this.app.setting.openTabById(newPlugin.id);
@@ -96,6 +97,7 @@ export default class OpenPluginCmdr extends Plugin {
 		const cmdrSettings: PluginInfo = {
 			id: "open-plugin-settings",
 			name: this.manifest.name,
+			commandName: this.manifest.name,
 		};
 		if (this.settings.pluginCmdr.find((p) => p.id === cmdrSettings.id) === undefined) {
 			this.settings.pluginCmdr.push(cmdrSettings);

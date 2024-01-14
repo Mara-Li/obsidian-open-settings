@@ -6,6 +6,7 @@
     "disabled": "Ce plugin est désactivé depuis les paramètres des modules complémentaires.",
     "refresh": "Rafraîchir la liste, supprimant les plugins désactivés/supprimés.",
     "remove": "Supprimer la commande de ce plugin",
-    "title": "Open Plugin Settings"
+    "title": "Open Plugin Settings",
+    "commandName": "Nom de la commande"
   }
 }

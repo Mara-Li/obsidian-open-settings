@@ -17,7 +17,6 @@ export default class OpenPluginSettingTab extends PluginSettingTab {
 		const { containerEl } = this;
 		containerEl.empty();
 
-		containerEl.createEl("h2", { text: i18next.t("settingsTab.title")}).style.textAlign = "center";
 		containerEl.createEl("p", { text: i18next.t("settingsTab.desc")}).style.textAlign = "center";
 
 		const buttonSettings = new Setting(containerEl)
@@ -46,7 +45,6 @@ export default class OpenPluginSettingTab extends PluginSettingTab {
 				.onClick(async () => {
 					//refresh the list of plugins
 					await this.plugin.removeDeletedPlugins();
-					await this.plugin.refresh();
 					this.display();
 				})
 		);
@@ -55,6 +53,19 @@ export default class OpenPluginSettingTab extends PluginSettingTab {
 		for (const plugin of this.plugin.settings.pluginCmdr) {
 			const pluginSettings = new Setting(containerEl)
 				.setName(plugin.name)
+				.addText((text) => {
+					text
+						.setValue(plugin.commandName ?? plugin.name)
+						.onChange(async (value) => {
+							//change the name of the commands
+							const oldPlugin = JSON.parse(JSON.stringify(plugin));
+							plugin.commandName = value;
+							await this.plugin.saveSettings();
+							await this.plugin.addNewCommands(oldPlugin, plugin);
+						})
+						.inputEl.ariaLabel = i18next.t("settingsTab.commandName");
+					this.addTooltip(i18next.t("settingsTab.commandName"), text.inputEl);
+				})
 				.setClass("open-plugin-settings-item")
 				.addButton((button) =>
 					button
@@ -70,6 +81,7 @@ export default class OpenPluginSettingTab extends PluginSettingTab {
 						})
 				);
 			if (!this.plugin.checkIfPluginIsEnabled(plugin.id)) {
+				console.log("disabled", plugin.id);
 				pluginSettings
 					.setDesc(i18next.t("settingsTab.disabled"))
 					.setClass("disabled");
@@ -77,7 +89,20 @@ export default class OpenPluginSettingTab extends PluginSettingTab {
 		}
 	}
 
-    
+	addTooltip(text: string, cb: HTMLElement) {
+		cb.onfocus = () => {
+			const tooltip = cb.parentElement?.createEl("div", { text, cls: "tooltip" });
+			if (tooltip) {
+				const rec = cb.getBoundingClientRect();
+				tooltip.style.top = `${rec.top + rec.height + 5}px`;
+				tooltip.style.left = `${rec.left + rec.width / 2}px`;
+			}
+		};
+		cb.onblur = () => {
+			cb.parentElement?.querySelector(".tooltip")?.remove();
+		};
+	}
+
 
 
 }

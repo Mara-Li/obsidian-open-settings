@@ -20,3 +20,11 @@ button.add-plugin-button {
 	opacity: 0.5;
 	font-style: italic;
 }
+
+.setting-item.open-plugin-settings-item .setting-item-info {
+    width: 20%;
+}
+
+.setting-item.open-plugin-settings-item input {
+    width: 100%;
+}
