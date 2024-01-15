@@ -53,6 +53,11 @@ export default class OpenPluginSettingTab extends PluginSettingTab {
 		for (const plugin of this.plugin.settings.pluginCmdr) {
 			const pluginSettings = new Setting(containerEl)
 				.setName(plugin.name)
+				.addExtraButton((button) =>
+					button
+						.setIcon("pencil")
+						.setDisabled(true)
+				)
 				.addText((text) => {
 					text
 						.setValue(plugin.commandName ?? plugin.name)
@@ -81,7 +86,6 @@ export default class OpenPluginSettingTab extends PluginSettingTab {
 						})
 				);
 			if (!this.plugin.checkIfPluginIsEnabled(plugin.id)) {
-				console.log("disabled", plugin.id);
 				pluginSettings
 					.setDesc(i18next.t("settingsTab.disabled"))
 					.setClass("disabled");

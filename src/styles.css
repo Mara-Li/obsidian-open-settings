@@ -22,9 +22,16 @@ button.add-plugin-button {
 }
 
 .setting-item.open-plugin-settings-item .setting-item-info {
-    width: 20%;
+    width: 0;
 }
 
 .setting-item.open-plugin-settings-item input {
     width: 100%;
 }
+.clickable-icon.setting-editor-extra-setting-button.is-disabled:active,
+.clickable-icon.setting-editor-extra-setting-button.is-disabled:hover {
+    background-color: transparent;
+    color: var(--icon-color);
+    opacity: 0.8;
+}
+
