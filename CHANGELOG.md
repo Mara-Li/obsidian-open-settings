@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [1.2.1](https://github.com/Lisandra-dev/open-plugin-settings-commands/compare/1.2.0...1.2.1) (2024-01-15)
+
+
+### Bug Fixes
+
+* fancy little button before command name ([91bb4fb](https://github.com/Lisandra-dev/open-plugin-settings-commands/commit/91bb4fb15b243abff192cec4aefd88c9d8821776))
+
 ## [1.2.0](https://github.com/Lisandra-dev/open-plugin-settings-commands/compare/1.1.2...1.2.0) (2024-01-14)
 
 
