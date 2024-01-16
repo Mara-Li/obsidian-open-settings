@@ -35,15 +35,9 @@ export default class OpenPluginCmdr extends Plugin {
 		}
 		const core = Object.entries(officialPlugins);
 		for ( const [id, enabled]  of core) {
-			if (enabled && !this.settings.pluginCmdr.find((p) => p.id === id) && this.checkIfPluginHasSettings(id)) {
-				//@ts-ignore
-				const name = this.app.internalPlugins.getPluginById(id)?.instance.name;
-				if (name)
-					plugins.push({
-						id,
-						name,
-						commandName: name,
-					});
+			const coreConfig = this.coreConfig(id);
+			if (enabled && !this.settings.pluginCmdr.find((p) => p.id === id) && this.checkIfPluginHasSettings(id) && coreConfig) {
+				plugins.push(coreConfig);
 			}
 		}
 		return plugins;
@@ -100,11 +94,12 @@ export default class OpenPluginCmdr extends Plugin {
 		if (this.app.internalPlugins.getPluginById(id) !== undefined) {
 			//@ts-ignore
 			const instance = this.app.internalPlugins.getPluginById(id)?.instance;
-			return {
-				id,
-				name: instance.name,
-				commandName: instance.name,
-			};
+			if (instance?.name)
+				return {
+					id,
+					name: instance.name,
+					commandName: instance.name,
+				};
 		}
 		return undefined;
 	}
