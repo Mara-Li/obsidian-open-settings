@@ -1,0 +1,12 @@
+{
+  "openOther": "Öffnen Sie andere Plugin-Einstellungen",
+  "settingsTab": {
+    "addNew": "Fügen Sie ein neues Plugin hinzu",
+    "desc": "In der Liste werden nur die aktivierten Plugins und Plugins mit Einstellungen angezeigt.",
+    "disabled": "Dieses Plugin ist in den Obsidian Community-Einstellungen deaktiviert.",
+    "refresh": "Aktualisieren Sie die Liste, indem Sie deaktivierte/entfernte Plugins entfernen.",
+    "remove": "Entfernen Sie dieses Plugin",
+    "title": "Plugin-Einstellungen öffnen",
+    "commandName" : "Befehlsname"
+  }
+}
