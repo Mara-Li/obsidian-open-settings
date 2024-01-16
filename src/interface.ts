@@ -16,3 +16,6 @@ export interface PluginInfo {
 	commandName: string;
 }
 
+export interface CorePlugins {
+	[id: string]: boolean;
+}

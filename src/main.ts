@@ -1,5 +1,5 @@
 import {Plugin} from "obsidian";
-import {DEFAULT_SETTINGS, OpenPluginSettings, PluginInfo} from "./interface";
+import {CorePlugins, DEFAULT_SETTINGS, OpenPluginSettings, PluginInfo} from "./interface";
 import {ressources as resources, translationLanguage} from "./i18n/i18next";
 import OpenPluginSettingTab from "./settings";
 import i18next from "i18next";
@@ -15,13 +15,15 @@ export default class OpenPluginCmdr extends Plugin {
 
 	checkIfPluginIsEnabled(pluginId: string): boolean {
 		//@ts-ignore
-		return Object.keys(this.app.plugins.plugins).find((plugin) => plugin === pluginId) !== undefined;
+		return Object.keys(this.app.plugins.plugins).find((plugin) => plugin === pluginId) !== undefined || Object.keys(this.app.internalPlugins.config).find((plugin) => plugin === pluginId) !== undefined;
 	}
 
 	parseManifestAllPlugins(): PluginInfo[] {
 		const plugins: PluginInfo[] = [];
 		//@ts-ignore
 		const manifestOfAllPlugins = this.app.plugins.manifests;
+		//@ts-ignore
+		const officialPlugins = this.app.internalPlugins.config as CorePlugins;
 		for (const manifest in manifestOfAllPlugins) {
 			if (!this.settings.pluginCmdr.find((p) => p.id === manifestOfAllPlugins[manifest].id) && this.checkIfPluginHasSettings(manifestOfAllPlugins[manifest].id)) {
 				plugins.push({
@@ -29,6 +31,19 @@ export default class OpenPluginCmdr extends Plugin {
 					name: manifestOfAllPlugins[manifest].name,
 					commandName: manifestOfAllPlugins[manifest].name,
 				});
+			}
+		}
+		const core = Object.entries(officialPlugins);
+		for ( const [id, enabled]  of core) {
+			if (enabled && !this.settings.pluginCmdr.find((p) => p.id === id) && this.checkIfPluginHasSettings(id)) {
+				//@ts-ignore
+				const name = this.app.internalPlugins.getPluginById(id)?.instance.name;
+				if (name)
+					plugins.push({
+						id,
+						name,
+						commandName: name,
+					});
 			}
 		}
 		return plugins;
@@ -80,6 +95,20 @@ export default class OpenPluginCmdr extends Plugin {
 		}
 	}
 
+	coreConfig(id: string):PluginInfo | undefined {
+		//@ts-ignore
+		if (this.app.internalPlugins.getPluginById(id) !== undefined) {
+			//@ts-ignore
+			const instance = this.app.internalPlugins.getPluginById(id)?.instance;
+			return {
+				id,
+				name: instance.name,
+				commandName: instance.name,
+			};
+		}
+		return undefined;
+	}
+
 	/**
 	 * Remove the plugins that are not enabled anymore*
 	 */
@@ -90,7 +119,7 @@ export default class OpenPluginCmdr extends Plugin {
 		// if the plugin is deleted remove it from the settings
 		// plugin deleted doesn't appear in the app.plugins.plugins
 		pluginsInfos.forEach((pluginInfo) => {
-			if (allPlugins[pluginInfo.id] === undefined) {
+			if (allPlugins[pluginInfo.id] === undefined && !this.coreConfig(pluginInfo.id)) {
 				this.settings.pluginCmdr = this.settings.pluginCmdr.filter((p) => p.id !== pluginInfo.id);
 			}
 		});
