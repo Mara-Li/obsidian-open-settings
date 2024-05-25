@@ -18,7 +18,7 @@ You can also open any plugin (not registered) with the command `Open other plugi
 ## 📥 Installation
 
 - [x] From Obsidian's community plugins
-- [x] Using BRAT with `https://github.com/Lisandra-dev/open-plugin-settings-commands`
+- [x] Using BRAT with `https://github.com/mara-li/open-plugin-settings-commands`
 - [x] From the release page: 
   - Download the latest release
   - Unzip `open-plugin-settings-commands.zip` in `.obsidian/plugins/` path
