@@ -30,6 +30,7 @@
     "cross-env": "^7.0.3",
     "dedent": "^1.6.0",
     "dotenv": "^17.0.0",
+    "esbuild": "^0.25.5",
     "obsidian": "^1.8.7",
     "obsidian-plugin-cli": "^0.9.0",
     "obsidian-typings": "^3.12.0",
@@ -40,6 +41,8 @@
     "i18next": "^25.2.1"
   },
   "trustedDependencies": [
+    "electron",
+    "esbuild",
     "obsidian-typings"
   ]
 }
