@@ -2,11 +2,16 @@
   "openOther": "Ouvrir les paramètres d'autres plugins",
   "settingsTab": {
     "addNew": "Ajouter un nouveau plugin",
+    "commandName": "Nom de la commande",
     "desc": "Seuls les plugins activés et ayant des paramètres seront affichés dans la liste.",
     "disabled": "Ce plugin est désactivé depuis les paramètres des modules complémentaires.",
     "refresh": "Rafraîchir la liste, supprimant les plugins désactivés/supprimés.",
     "remove": "Supprimer la commande de ce plugin",
-    "title": "Open Plugin Settings",
-    "commandName": "Nom de la commande"
+    "title": "Open Plugin Settings"
+  },
+  "sleepingTime": {
+    "desc": "Temps (en millisecondes) que le plugin attendra avant de charger. Utiliser ceci si vous remarquez que certains plugins ne chargent pas correctement leurs commandes.",
+    "error": "{{- value}} n'est pas un nombre valide.",
+    "title": "Temps avant le chargement"
   }
 }

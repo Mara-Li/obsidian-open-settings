@@ -1,12 +1,18 @@
-import {Plugin} from "obsidian";
-import {CorePlugins, DEFAULT_SETTINGS, OpenPluginSettings, PluginInfo} from "./interface";
-import {ressources as resources, translationLanguage} from "./i18n/i18next";
+import { Plugin } from "obsidian";
+import {
+	CorePlugins,
+	DEFAULT_SETTINGS,
+	OpenPluginSettings,
+	PluginInfo,
+} from "./interface";
+import { ressources as resources, translationLanguage } from "./i18n/i18next";
 import OpenPluginSettingTab from "./settings";
 import i18next from "i18next";
-import {OpenOtherPluginSettings} from "./modals";
+import { OpenOtherPluginSettings } from "./modals";
+import type { InternalPluginNameType } from "obsidian-typings";
 
 export default class OpenPluginCmdr extends Plugin {
-	settings: OpenPluginSettings;
+	settings!: OpenPluginSettings;
 
 	mobileContainers: HTMLElement[] = [];
 	settingsResultsContainerEl = createDiv(
@@ -14,8 +20,8 @@ export default class OpenPluginCmdr extends Plugin {
 	);
 
 	checkIfPluginIsEnabled(pluginId: string): boolean {
-		//@ts-ignore
-		return Object.keys(this.app.plugins.plugins).find((plugin) => plugin === pluginId) !== undefined || Object.keys(this.app.internalPlugins.config).find((plugin) => plugin === pluginId) !== undefined;
+		const loadPlugin = this.app.plugins.getPlugin(pluginId);
+		return loadPlugin?._loaded ?? false;
 	}
 
 	parseManifestAllPlugins(): PluginInfo[] {
@@ -25,7 +31,12 @@ export default class OpenPluginCmdr extends Plugin {
 		//@ts-ignore
 		const officialPlugins = this.app.internalPlugins.config as CorePlugins;
 		for (const manifest in manifestOfAllPlugins) {
-			if (!this.settings.pluginCmdr.find((p) => p.id === manifestOfAllPlugins[manifest].id) && this.checkIfPluginHasSettings(manifestOfAllPlugins[manifest].id)) {
+			if (
+				!this.settings.pluginCmdr.find(
+					(p) => p.id === manifestOfAllPlugins[manifest].id
+				) &&
+				this.checkIfPluginHasSettings(manifestOfAllPlugins[manifest].id)
+			) {
 				plugins.push({
 					id: manifestOfAllPlugins[manifest].id,
 					name: manifestOfAllPlugins[manifest].name,
@@ -34,9 +45,14 @@ export default class OpenPluginCmdr extends Plugin {
 			}
 		}
 		const core = Object.entries(officialPlugins);
-		for ( const [id, enabled]  of core) {
-			const coreConfig = this.coreConfig(id);
-			if (enabled && !this.settings.pluginCmdr.find((p) => p.id === id) && this.checkIfPluginHasSettings(id) && coreConfig) {
+		for (const [id, enabled] of core) {
+			const coreConfig = this.coreConfig(id as InternalPluginNameType);
+			if (
+				enabled &&
+				!this.settings.pluginCmdr.find((p) => p.id === id) &&
+				this.checkIfPluginHasSettings(id) &&
+				coreConfig
+			) {
 				plugins.push(coreConfig);
 			}
 		}
@@ -44,23 +60,8 @@ export default class OpenPluginCmdr extends Plugin {
 	}
 
 	checkIfPluginHasSettings(pluginId: string): boolean {
-		//@ts-ignore
 		const allSettingsTab = this.app.setting.pluginTabs;
 		return allSettingsTab.find((tab) => tab.id === pluginId) !== undefined;
-	}
-
-	async removeCommands()
-	{
-		//@ts-ignore
-		const pluginCommands = Object.keys(this.app.commands.commands).filter((command) => command.startsWith("open-plugin-settings"));
-		pluginCommands.forEach((command) => {
-			const id = command.replace("open-plugin-settings:", "");
-			if (this.settings.pluginCmdr.find((p) => p.id === id) === undefined) {
-				console.log(`remove command: ${command}`);
-				//@ts-ignore
-				this.app.commands.removeCommand(command);
-			}
-		});
 	}
 
 	/**
@@ -70,31 +71,36 @@ export default class OpenPluginCmdr extends Plugin {
 	 */
 	async addNewCommands(
 		oldPlugin: PluginInfo | undefined,
-		newPlugin: PluginInfo | undefined,
-	)
-	{
+		newPlugin: PluginInfo | undefined
+	) {
 		if (oldPlugin !== undefined) {
-			//@ts-ignore
-			this.app.commands.removeCommand(`open-plugin-settings:${oldPlugin.id}`); //doesn't work in some condition
+			this.removeCommand(`${oldPlugin.id}`);
 		}
-		if (newPlugin !== undefined && this.checkIfPluginIsEnabled(newPlugin.id) && this.checkIfPluginHasSettings(newPlugin.id)) {
+		console.log(
+			newPlugin?.name,
+			this.checkIfPluginHasSettings(newPlugin?.id ?? ""),
+			this.checkIfPluginIsEnabled(newPlugin?.id ?? "")
+		);
+		if (
+			newPlugin !== undefined &&
+			this.checkIfPluginIsEnabled(newPlugin.id) &&
+			this.checkIfPluginHasSettings(newPlugin.id)
+		) {
 			this.addCommand({
 				id: `${newPlugin.id}`,
 				name: `${newPlugin.commandName ?? newPlugin.name}`,
 				callback: async () => {
 					this.app.setting.open();
 					this.app.setting.openTabById(newPlugin.id);
-				}
+				},
 			});
 		}
 	}
 
-	coreConfig(id: string):PluginInfo | undefined {
-		//@ts-ignore
+	coreConfig(id: InternalPluginNameType): PluginInfo | undefined {
 		if (this.app.internalPlugins.getPluginById(id) !== undefined) {
-			//@ts-ignore
 			const instance = this.app.internalPlugins.getPluginById(id)?.instance;
-			if (instance?.name)
+			if (instance)
 				return {
 					id,
 					name: instance.name,
@@ -109,13 +115,18 @@ export default class OpenPluginCmdr extends Plugin {
 	 */
 	async removeDeletedPlugins() {
 		const pluginsInfos = this.settings.pluginCmdr;
-		//@ts-ignore
 		const allPlugins = this.app.plugins.manifests;
 		// if the plugin is deleted remove it from the settings
 		// plugin deleted doesn't appear in the app.plugins.plugins
 		pluginsInfos.forEach((pluginInfo) => {
-			if (allPlugins[pluginInfo.id] === undefined && !this.coreConfig(pluginInfo.id)) {
-				this.settings.pluginCmdr = this.settings.pluginCmdr.filter((p) => p.id !== pluginInfo.id);
+			if (
+				allPlugins[pluginInfo.id] === undefined &&
+				!this.coreConfig(pluginInfo.id as InternalPluginNameType)
+			) {
+				console.log(`Plugin ${pluginInfo.id} is deleted, removing it from the settings.`);
+				this.settings.pluginCmdr = this.settings.pluginCmdr.filter(
+					(p) => p.id !== pluginInfo.id
+				);
 			}
 		});
 		const cmdrSettings: PluginInfo = {
@@ -133,6 +144,7 @@ export default class OpenPluginCmdr extends Plugin {
 
 	async refresh() {
 		for (const plugin of this.settings.pluginCmdr) {
+			console.log(`Refreshing command for plugin ${plugin.id}`);
 			await this.addNewCommands(undefined, plugin);
 		}
 	}
@@ -148,20 +160,23 @@ export default class OpenPluginCmdr extends Plugin {
 		await this.loadSettings();
 		this.addSettingTab(new OpenPluginSettingTab(this.app, this));
 
-		this.addCommand({
-			id: "open-other-plugin-settings",
-			name: i18next.t("openOther"),
-			callback: () => {
-				new OpenOtherPluginSettings(this.app, this, this.settings).open();
-			}
+		this.app.workspace.onLayoutReady(async () => {
+			console.log("Workspace is ready, initializing commands...");
+			this.addCommand({
+				id: "open-other-plugin-settings",
+				name: i18next.t("openOther"),
+				callback: () => {
+					new OpenOtherPluginSettings(this.app, this, this.settings).open();
+				},
+			});
+			await sleep(300);
+			await this.removeDeletedPlugins();
+			await this.refresh();
 		});
-		await this.removeDeletedPlugins();
-		await this.refresh();
 	}
 
 	onunload() {
 		console.log(`Unloading ${this.manifest.id}...`);
-
 	}
 
 	async loadSettings() {
@@ -172,4 +187,3 @@ export default class OpenPluginCmdr extends Plugin {
 		await this.saveData(this.settings);
 	}
 }
-

@@ -2,11 +2,16 @@
   "openOther": "Open other plugin settings",
   "settingsTab": {
     "addNew": "Add a new plugin",
+    "commandName": "Command Name",
     "desc": "Only the enabled plugins and plugins with settings will be displayed in the list.",
     "disabled": "This plugin is disabled from Obsidian Community settings.",
     "refresh": "Refresh the list, removing disabled/removed plugins.",
     "remove": "Remove this plugin",
-    "title": "Open Plugin Settings",
-    "commandName" : "Command Name"
+    "title": "Open Plugin Settings"
+  },
+  "sleepingTime": {
+    "desc": "Time (in ms) the plugin will wait before loading. Use this if you notice that some plugin doesn't register their commands.",
+    "error": "{{- value}} is not a valid number.",
+    "title": "Time before load"
   }
 }

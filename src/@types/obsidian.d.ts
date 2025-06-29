@@ -1,6 +1,5 @@
 import { SettingTab } from "obsidian";
 
-
 declare module "obsidian" {
 	interface App {
 		setting: {
@@ -34,5 +33,4 @@ declare module "obsidian" {
 		plugin: Plugin;
 		setting: PluginSettingTab;
 	}
-
 }
