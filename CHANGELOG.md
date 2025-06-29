@@ -1,3 +1,8 @@
+## [1.3.4](https://github.com/Mara-Li/obsidian-open-settings/compare/1.3.3...1.3.4) (2025-06-29)
+### Bug Fixes
+
+* forgot to add the settings ([577f397](https://github.com/Mara-Li/obsidian-open-settings/commit/577f39746c626c3bbba1553cf0e9789965ff13fd))
+
 ## [1.3.3](https://github.com/Mara-Li/obsidian-open-settings/compare/1.3.2...1.3.3) (2025-06-29)
 ### Bug Fixes
 

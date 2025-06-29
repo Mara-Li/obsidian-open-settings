@@ -1,6 +1,6 @@
 {
   "name": "open-plugin-settings",
-  "version": "1.3.3",
+  "version": "1.3.4",
   "description": "Create a command to open a specified plugin settings.",
   "main": "lib/main.js",
   "license": "GPL-3.0-only",
