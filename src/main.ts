@@ -169,7 +169,7 @@ export default class OpenPluginCmdr extends Plugin {
 					new OpenOtherPluginSettings(this.app, this, this.settings).open();
 				},
 			});
-			await sleep(300);
+			await sleep(this.settings.sleepingTime ?? 300);
 			await this.removeDeletedPlugins();
 			await this.refresh();
 		});
