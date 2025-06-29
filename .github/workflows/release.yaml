@@ -1,50 +1,41 @@
 name: Release obsidian plugin
+
 on:
-  workflow_dispatch:
-    inputs:
-      bump:
-        default: false
-        description: "Bump version based on semantic release"
-        type: boolean
-        required: false
-      beta:
-        default: false
-        description: "Make a beta release"
-        type: boolean
-        required: false
-  push:
-    tags:
-      - "*"
+    workflow_dispatch:
+        inputs:
+            bump:
+                default: false
+                description: "Bump version based on semantic release"
+                type: boolean
+                required: false
+            beta:
+                default: false
+                description: "Make a beta release"
+                type: boolean
+                required: false
+    push:
+        tags:
+            - "*"
 permissions:
-  contents: write
+    contents: write
+
 jobs:
-  echo:
-    if: ${{ github.event.ACT }}
-    runs-on: ubuntu-latest
-    steps:
-      - name: echo
-        run: |
-          echo EVENT NAME =  ${{ github.event_name }}
-          echo BETA = ${{ inputs.beta || false}}
-          echo BUMP = ${{ inputs.bump || false}}
-  release:
-    if: (github.event_name == 'push') || (github.event_name == 'workflow_dispatch' && !inputs.bump)
-    uses: mara-li/reusable-workflows/.github/workflows/obsidian-plugin-release.yaml@main
-    with:
-        PLUGIN_NAME: "open-plugin-settings"
-        STYLE: true
-        CACHE: pnpm
-    secrets:
-        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  bump-version-and-release:
-    if: ${{ inputs.bump }}
-    uses: mara-li/reusable-workflows/.github/workflows/obsidian-plugin-bump-version.yaml@main
-    with:
-        PLUGIN_NAME: "open-plugin-settings"
-        STYLE: true
-        BETA: ${{ inputs.beta }}
-        CACHE: pnpm
+    release:
+        if: (github.event_name == 'push') || (github.event_name == 'workflow_dispatch' && !inputs.bump)
+        uses: mara-li/reusable-workflows/.github/workflows/obsidian-plugin-release.yaml@main
 
-    secrets:
-        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+            PLUGIN_NAME: open-plugin-settings
+            CACHE: "bun"
+        secrets:
+            GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+    bump-version-and-release:
+        if: ${{ inputs.bump || false }}
+        uses: mara-li/reusable-workflows/.github/workflows/obsidian-plugin-bump-version.yaml@main
+        with:
+            PLUGIN_NAME: open-plugin-settings
+            BETA: ${{ inputs.beta || false}}
+            CACHE: "bun"
+        secrets:
+            GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
