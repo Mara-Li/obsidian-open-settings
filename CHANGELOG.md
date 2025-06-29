@@ -1,3 +1,8 @@
+## [1.3.5](https://github.com/Mara-Li/obsidian-open-settings/compare/1.3.4...1.3.5) (2025-06-29)
+### Bug Fixes
+
+* stupid girl that ship without removing logs ([91ff67f](https://github.com/Mara-Li/obsidian-open-settings/commit/91ff67f4400e649c22bae56d81bf06d6aaf87790))
+
 ## [1.3.4](https://github.com/Mara-Li/obsidian-open-settings/compare/1.3.3...1.3.4) (2025-06-29)
 ### Bug Fixes
 
