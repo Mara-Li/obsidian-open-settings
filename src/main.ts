@@ -76,11 +76,6 @@ export default class OpenPluginCmdr extends Plugin {
 		if (oldPlugin !== undefined) {
 			this.removeCommand(`${oldPlugin.id}`);
 		}
-		console.log(
-			newPlugin?.name,
-			this.checkIfPluginHasSettings(newPlugin?.id ?? ""),
-			this.checkIfPluginIsEnabled(newPlugin?.id ?? "")
-		);
 		if (
 			newPlugin !== undefined &&
 			this.checkIfPluginIsEnabled(newPlugin.id) &&
@@ -123,7 +118,6 @@ export default class OpenPluginCmdr extends Plugin {
 				allPlugins[pluginInfo.id] === undefined &&
 				!this.coreConfig(pluginInfo.id as InternalPluginNameType)
 			) {
-				console.log(`Plugin ${pluginInfo.id} is deleted, removing it from the settings.`);
 				this.settings.pluginCmdr = this.settings.pluginCmdr.filter(
 					(p) => p.id !== pluginInfo.id
 				);
@@ -144,7 +138,6 @@ export default class OpenPluginCmdr extends Plugin {
 
 	async refresh() {
 		for (const plugin of this.settings.pluginCmdr) {
-			console.log(`Refreshing command for plugin ${plugin.id}`);
 			await this.addNewCommands(undefined, plugin);
 		}
 	}
@@ -161,7 +154,6 @@ export default class OpenPluginCmdr extends Plugin {
 		this.addSettingTab(new OpenPluginSettingTab(this.app, this));
 
 		this.app.workspace.onLayoutReady(async () => {
-			console.log("Workspace is ready, initializing commands...");
 			this.addCommand({
 				id: "open-other-plugin-settings",
 				name: i18next.t("openOther"),
