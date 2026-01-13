@@ -1,3 +1,8 @@
+## 1.4.0 (2026-01-13)
+### Features
+
+* **i18n:** add russian translation ([e3afac1](https://github.com/Mara-Li/obsidian-open-settings/commit/e3afac1b112c93827992d0ca663b60ce73d7f2ac))
+
 ## [1.3.5](https://github.com/Mara-Li/obsidian-open-settings/compare/1.3.4...1.3.5) (2025-06-29)
 ### Bug Fixes
 
