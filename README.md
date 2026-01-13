@@ -46,6 +46,8 @@ You can also create a `.env.json` file with the path to your main Obsidian Vault
 
 - [x] English
 - [x] French
+- [x] German
+- [x] Russian 
 
 To add a translation:
 1. Fork the repository
